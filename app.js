@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.json());
 
-const allowedOrigins = ['http://localhost:5173', 'https://domain-frontend-anda.vercel.app'];
+const allowedOrigins = ['http://localhost:5173', 'https://frontend-tiktok-roasting-7zmoao8et.vercel.app'];
 
 app.use(cors({
   origin: function (origin, callback) {
