@@ -72,7 +72,7 @@ exports.requestRoast = async (req, res) => {
                         - Jumlah teman vs followers (antisosial atau sombong?)
                         - Segala hal yang bisa dijadikan bahan roasting!
 
-                        Gunakan bahasa Indonesia yang gaul, santai, dan savage. Panjang roasting minimal 200 kata! GO WILD! 🔥`,
+                        Gunakan bahasa Indonesia yang gaul, santai, dan savage. Panjang roasting minimal 80 kata! GO WILD! 🔥`,
         });
 
         aiResponseText = responseGemini.text.trim();
