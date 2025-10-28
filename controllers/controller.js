@@ -56,7 +56,7 @@ exports.requestRoast = async (req, res) => {
         const responseGemini = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             generationConfig: {
-                maxOutputTokens: 75
+                maxOutputTokens: 150
             },
             contents: `Roast habis-habisan akun TikTok ini dengan kata-kata pedas dan sarkastik! Jangan pelit, roasting kreatif!
                         DATA KORBAN:
@@ -74,7 +74,7 @@ exports.requestRoast = async (req, res) => {
 
                         Gunakan bahasa Indonesia yang gaul dan tidak perlu basa-basi, langsung pada roasting pedasnya!
                         
-                        PENTING: Batasi jawaban hanya 50 kata dalam bentuk teks biasa - jangan gunakan format apa pun seperti bold (tanda bintang), italic, atau lainnya`,
+                        PENTING: Batasi jawaban hanya 100 kata dalam bentuk teks biasa - jangan gunakan format apa pun seperti bold (tanda bintang), italic, atau lainnya`,
         });
 
         aiResponseText = responseGemini.text.trim();
