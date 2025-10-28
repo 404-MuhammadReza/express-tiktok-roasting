@@ -109,3 +109,52 @@ exports.requestRoast = async (req, res) => {
         roast: aiResponseText,
     });
 };
+
+exports.requestData = async (req, res) => {
+    try {
+        console.info('Mengambil Semua Data dari Database');
+        const allData = await model.find({});
+
+        if (!allData || allData.length === 0) {
+            console.info('Tidak Ada Data di Database.');
+            return res.status(404).json({
+                message: "Data Tidak Ada!"
+            });
+        }
+
+        const formattedData = allData.map(item => {
+            const date = new Date(item.timestamp);
+            
+            const padTo2Digits = (num) => num.toString().padStart(2, '0');
+
+            const day = padTo2Digits(date.getDate());
+            const month = padTo2Digits(date.getMonth() + 1);
+            const year = date.getFullYear();
+            const hours = padTo2Digits(date.getHours());
+            const minutes = padTo2Digits(date.getMinutes());
+
+            const formattedTimestamp = `${day}-${month}-${year} ${hours}:${minutes}`;
+
+            return {
+                username: item.username,
+                nama: item.nama,
+                followers: item.followers,
+                following: item.following,
+                like: item.like,
+                video: item.video,
+                roasting: item.roasting,
+                timestamp: formattedTimestamp
+            };
+        });
+
+        console.info('Berhasil mengambil dan memformat data.');
+        res.status(200).json(formattedData);
+
+    } catch (error) {
+        console.error("Gagal mengambil data dari database:", error.message);
+        res.status(500).json({
+            error: "Terjadi kesalahan pada server saat mengambil data.",
+            details: error.message
+        });
+    }
+};
