@@ -1,5 +1,6 @@
 const axios = require("axios");
 const { GoogleGenAI } = require("@google/genai");
+const model = require('../models/model');
 
 exports.requestRoast = async (req, res) => {
     const ai = new GoogleGenAI({
@@ -79,6 +80,20 @@ exports.requestRoast = async (req, res) => {
 
         aiResponseText = responseGemini.text.trim();
         console.info('Berhasil Mendapatkan Roasting');
+
+        console.info('Menyimpan data ke database...');
+        const dataToSave = new Roast({
+            username: tiktokData.username,
+            nama: tiktokData.nama,
+            followers: tiktokData.followers,
+            following: tiktokData.following,
+            like: tiktokData.jumlahLike,
+            video: tiktokData.jumlahVideo,
+            roasting: aiResponseText
+        });
+        
+        await dataToSave.save();
+        console.info('Data Berhasil Disimpan ke Database');
     } catch (error) {
         console.error("Gagal memanggil :", error.message);
 
