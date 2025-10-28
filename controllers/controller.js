@@ -47,7 +47,6 @@ exports.requestRoast = async (req, res) => {
             nama: user.nickname,
             followers: stats.followerCount,
             following: stats.followingCount,
-            teman: stats.friendCount,
             jumlahLike: stats.heartCount,
             jumlahVideo: stats.videoCount,
         };
@@ -56,23 +55,26 @@ exports.requestRoast = async (req, res) => {
         console.info('Proses API GEMINI!');
         const responseGemini = await ai.models.generateContent({
             model: "gemini-2.5-flash",
-            contents: `Roast habis-habisan akun TikTok ini dengan gaya yang lucu, sarkastik, dan savage tapi tetap kreatif! Jangan pelit, roasting harus pedas dan menghibur!
+            generationConfig: {
+                maxOutputTokens: 75
+            },
+            contents: `Roast habis-habisan akun TikTok ini dengan kata-kata pedas dan sarkastik! Jangan pelit, roasting kreatif!
                         DATA KORBAN:
-                        👤 Username: @${tiktokData.username}
-                        📝 Nama: ${tiktokData.nama}
-                        👥 Followers: ${tiktokData.followers.toLocaleString('id-ID')}
-                        ➕ Following: ${tiktokData.following.toLocaleString('id-ID')}
-                        👫 Teman: ${tiktokData.teman}
-                        ❤️ Total Like: ${tiktokData.jumlahLike.toLocaleString('id-ID')}
-                        🎬 Jumlah Video: ${tiktokData.jumlahVideo}
+                        Username: @${tiktokData.username}
+                        Nama: ${tiktokData.nama}
+                        Followers: ${tiktokData.followers.toLocaleString('id-ID')}
+                        Following: ${tiktokData.following.toLocaleString('id-ID')}
+                        Total Like: ${tiktokData.jumlahLike.toLocaleString('id-ID')}
+                        Jumlah Video: ${tiktokData.jumlahVideo}
 
                         Analisis semua aspek dari data di atas dan roast dengan detail:
                         - Ratio followers vs following (apakah dia desperate mencari followers?)
                         - Jumlah video vs total like (kontennya bagus atau sampah?)
-                        - Jumlah teman vs followers (antisosial atau sombong?)
                         - Segala hal yang bisa dijadikan bahan roasting!
 
-                        Gunakan bahasa Indonesia yang gaul, santai, dan savage. Panjang roasting minimal 80 kata! GO WILD! 🔥`,
+                        Gunakan bahasa Indonesia yang gaul dan tidak perlu basa-basi, langsung pada roasting pedasnya!
+                        
+                        PENTING: Batasi jawaban hanya 50 kata dalam bentuk teks biasa - jangan gunakan format apa pun seperti bold (tanda bintang), italic, atau lainnya`,
         });
 
         aiResponseText = responseGemini.text.trim();
