@@ -82,7 +82,7 @@ exports.requestRoast = async (req, res) => {
         console.info('Berhasil Mendapatkan Roasting');
 
         console.info('Menyimpan data ke database...');
-        const dataToSave = new Roast({
+        const dataToSave = new model({
             username: tiktokData.username,
             nama: tiktokData.nama,
             followers: tiktokData.followers,
